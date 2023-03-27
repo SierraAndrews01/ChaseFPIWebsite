@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}Uploader: {{common_name}}{% endblock %}
+{% block extrahead %}
+    <style>body {font-family: Arial, sans-serif;}</style>
+    <script src="https://bossanova.uk/jspreadsheet/v3/jexcel.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v3/jexcel.css" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<script src="https://jsuites.net/v3/jsuites.js"></script>
+<link rel="stylesheet" href="https://jsuites.net/v3/jsuites.css" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+<h1 class="pb-2">Enter Test Points for {{ common_name }}</h1>
+<div class="py-2">
+    <div id="load" class="btn btn-outline-secondary me-3" onclick="load();">Load Points</div>
+    <div class="btn btn-outline-secondary" onclick="reset_table()">Reset Table</div>
+</div>
+<div class="feature mb-4">
+    <div id="spreadsheet"></div>
+</div>
+<div class="btn btn-outline-primary me-3" onclick="submit();">Submit</div>
+<div class="mt-4">
+    <a class="btn btn-outline-secondary me-3" href="/upload">Back to Upload</a>
+</div>
+<form id="form" action="/upload/{{cellname}}" method="post">
+    {% csrf_token %}
+</form>
+<script>
+var data = [''];
+
+function make_table(){
+    var table = jexcel(document.getElementById('spreadsheet'), {
+        data:data,
+        allowInsertColumn:false,
+        columns: [
+            {% for c in columns %}
+            {
+                type: 'numeric',
+                title:'{{c}}',
+                width:220,
+                mask:"#"
+            },
+            {% endfor %}
+         ]
+    });
+    return table;
+}
+
+function submit(){
+    let data_form = table.getData();
+    form = document.getElementById('form');
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = 'data';
+    hiddenField.value = JSON.stringify(data_form);
+
+    form.appendChild(hiddenField);
+    form.submit()
+}
+
+function load(){
+    btn = document.getElementById('load');
+    btn.innerText = 'Loading...';
+    btn.disabled = true;
+    fetch('/upload/{{cellname}}/readpoints').then(response => {
+        if (response.ok) {
+            response.json().then(json => {
+                table.setData(json['{{cellname}}']);
+                btn.innerText = 'Load Points';
+                btn.disabled = false;
+            });
+        } else {
+            alert("HTTP error");
+            btn.innerText = 'Load Points';
+            btn.disabled = false;
+        }
+    });
+}
+
+function reset_table(){
+    document.getElementById('spreadsheet').innerHTML = "";
+    table = make_table()
+}
+
+table = make_table()
+</script>
+{% endblock %}
+
+
+
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+<!--    <title>Uploader: {{common_name}}</title>-->
+<!--    <style>body {font-family: Arial, sans-serif;}</style>-->
+<!--    <script src="https://bossanova.uk/jspreadsheet/v3/jexcel.js"></script>-->
+<!--    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v3/jexcel.css" type="text/css" />-->
+<!--</head>-->
+
+<!--<script src="https://jsuites.net/v3/jsuites.js"></script>-->
+<!--<link rel="stylesheet" href="https://jsuites.net/v3/jsuites.css" type="text/css" />-->
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">-->
+<!--<body>-->
+<!--    <div class="container px-4 py-5">-->
+<!--        <h1>Enter Test Points for {{ common_name }}</h1>-->
+<!--        <div class="py-2">-->
+<!--            <div id="load" class="btn btn-outline-secondary me-3" onclick="load();">Load Points</div>-->
+<!--            <div class="btn btn-outline-secondary" onclick="reset_table()">Reset Table</div>-->
+<!--        </div>-->
+<!--        <div class="feature mb-4">-->
+<!--            <div id="spreadsheet"></div>-->
+<!--        </div>-->
+<!--        <div class="btn btn-outline-primary me-3" onclick="submit();">Submit</div>-->
+<!--        <div class="mt-4">-->
+<!--            <a class="btn btn-outline-secondary me-3" href="/upload">Back to Upload</a>-->
+<!--            <a class="btn btn-outline-secondary" href="/">Return to Home</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--<form id="form" action="/upload/{{cellname}}" method="post">-->
+<!--    {% csrf_token %}-->
+<!--</form>-->
+<!--</body>-->
+<!--<script>-->
+<!--var data = [''];-->
+
+<!--function make_table(){-->
+<!--    var table = jexcel(document.getElementById('spreadsheet'), {-->
+<!--        data:data,-->
+<!--        allowInsertColumn:false,-->
+<!--        columns: [-->
+<!--            {% for c in columns %}-->
+<!--            {-->
+<!--                type: 'numeric',-->
+<!--                title:'{{c}}',-->
+<!--                width:220,-->
+<!--                mask:"#"-->
+<!--            },-->
+<!--            {% endfor %}-->
+<!--         ]-->
+<!--    });-->
+<!--    return table;-->
+<!--}-->
+
+<!--function submit(){-->
+<!--    let data_form = table.getData();-->
+<!--    form = document.getElementById('form');-->
+<!--    const hiddenField = document.createElement('input');-->
+<!--    hiddenField.type = 'hidden';-->
+<!--    hiddenField.name = 'data';-->
+<!--    hiddenField.value = JSON.stringify(data_form);-->
+
+<!--    form.appendChild(hiddenField);-->
+<!--    form.submit()-->
+<!--}-->
+
+<!--function load(){-->
+<!--    btn = document.getElementById('load');-->
+<!--    btn.innerText = 'Loading...';-->
+<!--    btn.disabled = true;-->
+<!--    fetch('/upload/{{cellname}}/readpoints').then(response => {-->
+<!--        if (response.ok) {-->
+<!--            response.json().then(json => {-->
+<!--                table.setData(json['{{cellname}}']);-->
+<!--                btn.innerText = 'Load Points';-->
+<!--                btn.disabled = false;-->
+<!--            });-->
+<!--        } else {-->
+<!--            alert("HTTP error");-->
+<!--            btn.innerText = 'Load Points';-->
+<!--            btn.disabled = false;-->
+<!--        }-->
+<!--    });-->
+<!--}-->
+
+<!--function reset_table(){-->
+<!--    document.getElementById('spreadsheet').innerHTML = "";-->
+<!--    table = make_table()-->
+<!--}-->
+
+<!--table = make_table()-->
+<!--</script>-->
+<!--</html>-->

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}FPI - Home{% endblock %}
+{% block content %}
+<div class="py-5 feature">
+    <div class="content">
+        <h1 class="pb-4">Fluid Power Institute Data Management</h1>
+    </div>
+    <div class="row row-cols-md-3">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Export</h3>
+                    <p class="card-text">Export a single day of data from the database.</p>
+                    <a class="btn btn-outline-primary" href="/export">--></a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Test Point Upload</h3>
+                    <p class="card-text">Upload test point data for a stand</p>
+                    <a class="btn btn-outline-primary" href="/upload">--></a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Data</h3>
+                    <p class="card-text">View and graph data in Grafana.</p>
+                    <a class="btn btn-outline-primary" target="_blank" href="http://data.campus.fpi">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                          <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-md-3 mt-4">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title">DAQ Services</h3>
+                    <p class="card-text">Manage data collection services and view logs.</p>
+                    <a class="btn btn-outline-primary" target="_blank" href="http://daq.campus.fpi">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                          <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
