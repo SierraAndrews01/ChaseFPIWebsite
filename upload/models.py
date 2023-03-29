@@ -68,7 +68,14 @@ class CellData(models.Model):
                 'link': "/upload/cell8",
                 'max input': 600,
             },
-
+            'Stand 4':{
+                'columns': ('Pressure Test Points', 'Displacement Test Points', 'Temperature Test Points'),
+                'tagnames': ('Pressure_TestPoints', 'Displacement_TestPoints', 'Temperature_TestPoints'),
+                'common_name': "Stand 4",
+                'ip': '192.168.20.14',
+                'link': "/upload/stand4",
+                'max input': 100,                
+            },
         }
 
     def get_context(self, cellname):
