@@ -69,8 +69,8 @@ class CellData(models.Model):
                 'max input': 600,
             },
             'Stand 4':{
-                'columns': ('Pressure Test Points', 'Displacement Test Points', 'Temperature Test Points'),
-                'tagnames': ('Pressure_TestPoints', 'Displacement_TestPoints', 'Temperature_TestPoints'),
+                'columns': ('Cycle Number', 'Pressure Test Points', 'Displacement Test Points', 'Temperature Test Points'),
+                'tagnames': ('Cycle_Number_TestPoints', 'Pressure_TestPoints', 'Displacement_TestPoints', 'Temperature_TestPoints'),
                 'common_name': "Stand 4",
                 'ip': '192.168.20.14',
                 'link': "/upload/stand4",
